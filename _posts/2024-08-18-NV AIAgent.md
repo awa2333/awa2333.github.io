@@ -282,7 +282,3 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-
-
-2.[NVIDIA NIM](https://build.nvidia.com/explore/discover)
-2.[NVIDIA 深度学习培训中心(DLI)](https://www.nvidia.cn/training/)
