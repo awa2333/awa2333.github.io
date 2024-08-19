@@ -10,7 +10,7 @@ NVIDIA课程的环境部署在CSDN博客:[2024 NVIDIA开发者夏令营环境配
 
 笔者基于课程所学的内容，采用了**LangChain**这个python包和**OpenAI**包提供的AI接口以及[NVIDIA](https://build.nvidia.com/explore/discover)的各式各样的LLM模型实现了一个RAG AIAgent，还进一步实现了图片输入的多模态LLM。
 
-![image](/img/img1.png "个人成果")
+![image](https://raw.githubusercontent.com/awa2333/awa2333.github.io/main/img/img1.png "个人成果")
 
 总体来说，这是一个最基本的成果，课程上还有更加惊艳的成果，但是笔者不再赘述。
 
@@ -128,8 +128,161 @@ def model_process(image_b64, user_input, table):
 
 如上文所说，未来可以尝试实现真正的多模态RAG AIAgent。
 
-## 附件与参考资料
+## 代码
 
-1.[代码文件](./Code/Nvidia%20AIAgent.py)
+```python
+import base64
+from itertools import chain
+from marshal import dumps
+from os.path import split
+import gradio
+from IPython.core.debugger import prompt
+from idna import valid_label_length
+from langchain_community.vectorstores import FAISS
+from openai import OpenAI
+import getpass
+import os
+from langchain_nvidia_ai_endpoints import ChatNVIDIA, NVIDIAEmbeddings
+from sqlalchemy.testing.suite.test_reflection import metadata
+from tqdm import tqdm
+from pathlib import Path
+from operator import itemgetter
+from langchain.vectorstores import VectorStore
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnablePassthrough
+from langchain.text_splitter import CharacterTextSplitter
+import faiss
+from triton.language.semantic import store
+from IPython.display import Audio
+from langchain.load.dump import dumps
+import matplotlib.pyplot as plt
+import numpy as np
+from langchain.chains import ConversationChain
+from langchain.memory import ConversationBufferMemory
+from langchain.schema.runnable import RunnableLambda
+from langchain.schema.runnable import RunnablePassthrough
+import re
+from langchain_core.runnables import RunnableBranch, RunnableAssign
+
+global img_path
+img_path = '/home/he/CodeField/Python/py10_microsoft_llm/workspace/Microsoft-Phi-3-NvidiaNIMWorkshop/' + 'image.png'
+
+
+def get_nvidia_key():
+    if os.environ.get("NVIDIA_API_KEY", "").startswith("nvapi-"):
+        print("Valiad NVIDIA_API_KEY already in environment. Delete to reset")
+    else:
+        nvapi_key = getpass.getpass("Enter your NVIDIA API Key: ")
+        assert nvapi_key.startswith("nvapi-"), f"{nvapi_key[:5]}... is not a valid NVIDIA API Key"
+        os.environ["NVIDIA_API_KEY"] = nvapi_key
+        return None
+
+
+def rag_initial(chat_model, embedder_model):
+    return ChatNVIDIA(model=chat_model, max_tokens=2048), NVIDIAEmbeddings(model=embedder_model)
+
+
+def save_table_to_global(x):
+    global table
+    if 'TABLE' in x.content:
+        table = x.content.split('TABLE', 1)[1].split('END_TABLE')[0]
+    return x
+
+
+def image2b64(image_file):
+    with open(image_file, "rb") as f:
+        image_b64 = base64.b64encode(f.read()).decode()
+    return image_b64
+
+
+def text2audio(text):
+    edge_command = f'edge-tts --text "{text}" --write-media ./content/audio.mp3'
+    os.system(edge_command)
+    Audio('./content/audio.mp3', autoplay=True)
+    return None
+
+
+def extract_python_code(text):
+    pattern = r'```python\s*(.*?)\s*```'
+    matches = re.findall(pattern, text, re.DOTALL)
+    return [match.strip() for match in matches]
+
+
+def execute_and_return(x):
+    code = extract_python_code(x.content)[0]
+    try:
+        result = exec(str(code))
+    except ExceptionType:
+        print("The code is not executable, don't give up, try again!")
+    return x
+
+
+def execute_and_return_gr(x):
+    code = extract_python_code(x.content)[0]
+    try:
+        result = exec(str(code))
+    except ExceptionType:
+        print("The code is not executable, don't give up, try again!")
+    return img_path
+
+
+def model_process(image_b64, user_input, table):
+    image_b64 = image2b64(image_b64)
+    chart_reading = ChatNVIDIA(model="microsoft/phi-3-vision-128k-instruct")
+    chart_reading_prompt = ChatPromptTemplate.from_template(
+        'Generate underlying data table of the figure below, : <img src="data:image/png;base64,{image_b64}" />'
+    )
+    chart_chain = chart_reading_prompt | chart_reading
+    instruct_chat = ChatNVIDIA(model="meta/llama-3.1-405b-instruct")
+    instruct_prompt = ChatPromptTemplate.from_template(
+        "Do NOT repeat my requirements already stated. Based on this table {table}, {input}" \
+        "If has table string, start with 'TABLE', end with 'END_TABLE'." \
+        "If has code, start with '```python' and end with '```'." \
+        "Do NOT include table inside code, and vice versa."
+    )
+    instruct_chain = instruct_prompt | instruct_chat
+    chart_reading_branch = RunnableBranch(
+        (lambda x: x.get('table') is None, RunnableAssign({'table': chart_chain})),
+        (lambda x: x.get('table') is not None, lambda x: x),
+        lambda x: x
+    )
+    update_table = RunnableBranch(
+        (lambda x: 'TABLE' in x.content, save_table_to_global),
+        lambda x: x
+    )
+    execute_code = RunnableBranch(
+        (lambda x: '```python' in x.content, execute_and_return_gr),
+        lambda x: x
+    )
+    chain = (
+            chart_reading_branch
+            | instruct_chain
+            | update_table
+            | execute_code
+    )
+    return chain.invoke({"image_b64": image_b64, "input": user_input, "table": table})
+
+
+def main():
+    get_nvidia_key()
+    model = "meta/llama-3.1-405b-instruct"
+    embedder = "NV-Embed-QA"
+    # model_initial(model, embedder)
+    gradio_interface = gradio.Interface(fn=model_process,
+                                        inputs=[gradio.Image(label="Upload image", type="filepath"), 'text'],
+                                        outputs=['image'],
+                                        title="Multi Modal chat agent",
+                                        description="Multi Modal chat agent",
+                                        allow_flagging="never")
+    gradio_interface.launch(debug=True, share=False, show_api=False)
+    return None
+
+
+if __name__ == "__main__":
+    main()
+```
+
+
 2.[NVIDIA NIM](https://build.nvidia.com/explore/discover)
 2.[NVIDIA 深度学习培训中心(DLI)](https://www.nvidia.cn/training/)
