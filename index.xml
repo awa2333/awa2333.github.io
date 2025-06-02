@@ -7,7 +7,7 @@
 &lt;img src="./pics/DSSS_system.png" alt="DSSS_system">&lt;/p>
 &lt;h2 id="二系统目标">二、系统目标&lt;/h2>
 &lt;p>本次仿真的DSSS系统目标是利用python实现100Hz扩频序列，100/7Hz的二进制比特信息
-100Hz的7位双极性m序列，2000Hz的载波信号cos4000$\pi$t，BPSK调制以及高斯白噪声
+100Hz的7位双极性m序列，2000Hz的载波信号cos4000$\pi$t，BPSK调制以及高斯白噪声，
 在接收端实现2000Hz的恢复载波，以及凯塞窗低通滤波器，对滤波后的信号进行抽样判决。&lt;/p>
 &lt;h2 id="三python实现">三、Python实现&lt;/h2>
 &lt;h3 id="发射端">发射端&lt;/h3>
@@ -30,7 +30,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> mSeqContinuos_: list[int] &lt;span style="color:#f92672">=&lt;/span> [int(i) &lt;span style="color:#66d9ef">for&lt;/span> i &lt;span style="color:#f92672">in&lt;/span> mSeqContinuos]
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> [mSeq, mSeqContinuos_]
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>参数解释，输入参数num是m序列的阶数，因为要输出7位m序列，所以阶数默认是3。
-pose参数是反馈的参数。因为3阶m序列信号的产生是第1位和第3为反馈，所以是1,3。&lt;br>
+pose参数是反馈的参数。因为3阶m序列信号的产生是第1位和第3位为反馈，所以是1,3。&lt;br>
 &lt;img src="./pics/%E5%8F%8C%E6%9E%81%E6%80%A77%E4%BD%8Dm%E5%BA%8F%E5%88%97%E9%A2%91%E8%B0%B1.png" alt="m序列码频谱">&lt;/p></description></item><item><title>Nvidia NIM平台本地边缘设备大模型部属</title><link>https://awa2333.github.io/posts/nv-aiagent/</link><pubDate>Sun, 18 Aug 2024 00:00:00 +0800</pubDate><guid>https://awa2333.github.io/posts/nv-aiagent/</guid><description>&lt;h1 id="基于nvidia-nim平台的本地边缘设备大模型部署">基于NVIDIA NIM平台的本地边缘设备大模型部署&lt;/h1>
 &lt;p>摘要：笔者在&lt;a href="https://www.nvidia.cn/training/">NVIDIA DLI&lt;/a>上报名了NVIDIA AI-AGENT夏季训练营，这个课程用三天让我们实现基于&lt;a href="https://build.nvidia.com/explore/discover">NVIDIA NIM&lt;/a>平台的RAG-AIAgent运用。&lt;/p>
 &lt;h2 id="环境部署">环境部署&lt;/h2>
