@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr" class="h-full">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>DSSSsimulate | Yaoheng&#39;s Blog</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+<link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+<link rel="shortcut icon" href="/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="/favicon/site.webmanifest" />
+
+
+
+  
+    
+    
+      
+        <link rel="stylesheet" href="/css/main.css">
+      
+    
+  
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.min.b5fece9e2cbcfd48f4f9b3899d395b906b52021e9f44b190b2f17b2b4bc9a057.css" media="screen" integrity="sha256-tf7Oniy8/Uj0&#43;bOJnTlbkGtSAh6fRLGQsvF7K0vJoFc=">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelectorAll('pre code').forEach((el) => {
+      hljs.highlightElement(el);
+      
+      setTimeout(() => {
+        el.style.backgroundColor = 'transparent';
+        el.parentElement.style.backgroundColor = '#ffffff';
+      }, 10);
+    });
+  });
+</script>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+      <script src="/js/main.js"></script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false}
+      ],
+      throwOnError: false
+    });
+    
+    
+    document.querySelectorAll('pre code').forEach(function(codeBlock) {
+      
+      let language = '';
+      codeBlock.className.split(' ').forEach(function(cls) {
+        if (cls.startsWith('language-')) {
+          language = cls.substring(9);
+        }
+      });
+      
+      
+      const pre = codeBlock.parentNode;
+      const wrapper = pre.parentNode;
+      
+      
+      const container = document.createElement('div');
+      container.className = 'code-block-container';
+      container.style.backgroundColor = '#ffffff';
+      
+      
+      const header = document.createElement('div');
+      header.className = 'code-block-header';
+      
+      
+      if (language) {
+        const langLabel = document.createElement('span');
+        langLabel.className = 'code-language-label';
+        langLabel.textContent = language.toUpperCase();
+        header.appendChild(langLabel);
+      }
+      
+      
+      const copyButton = document.createElement('button');
+      copyButton.className = 'copy-button';
+      copyButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg> Copy';
+      
+      copyButton.addEventListener('click', function() {
+        
+        const code = codeBlock.textContent;
+        
+        
+        navigator.clipboard.writeText(code).then(function() {
+          
+          copyButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg> Copied!';
+          
+          
+          setTimeout(function() {
+            copyButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg> Copy';
+          }, 2000);
+        });
+      });
+      
+      header.appendChild(copyButton);
+      
+      
+      if (pre.parentNode) {
+        pre.parentNode.removeChild(pre);
+      }
+      
+      
+      pre.style.backgroundColor = '#ffffff';
+      codeBlock.style.backgroundColor = '#ffffff';
+      
+      
+      container.appendChild(header);
+      container.appendChild(pre);
+      
+      
+      wrapper.appendChild(container);
+      
+      
+      hljs.highlightElement(codeBlock);
+      
+      
+      setTimeout(() => {
+        pre.style.backgroundColor = '#ffffff';
+        codeBlock.style.backgroundColor = '#ffffff';
+      }, 50);
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    const footnoteBacklinks = document.querySelectorAll('.footnote-backref');
+    
+    footnoteBacklinks.forEach(function(backlink) {
+      backlink.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        
+        const href = backlink.getAttribute('href');
+        
+        if (href) {
+          
+          const target = document.querySelector(href);
+          
+          if (target) {
+            
+            target.scrollIntoView({ behavior: 'smooth' });
+            
+            
+            target.classList.add('footnote-highlight');
+            setTimeout(function() {
+              target.classList.remove('footnote-highlight');
+            }, 2000);
+          }
+        }
+      });
+    });
+  });
+</script>
+
+
+</head>
+<body class="flex flex-col bg-gray-50 font-bilingual">
+  <header class="fixed top-0 left-0 z-30 w-full bg-white shadow-sm">
+    <div class="w-full max-w-4xl mx-auto px-6 overflow-x-auto sm:overflow-visible">
+      <div class="flex items-center justify-between py-3">
+  <div class="text-lg sm:text-xl font-bold flex-shrink-0 max-w-[40%] sm:max-w-md truncate">
+    <a href="/" class="text-current hover:text-blue-600 transition-colors no-underline">
+      Yaoheng&#39;s Blog
+    </a>
+  </div>
+  
+  <nav class="flex justify-end w-full whitespace-nowrap">
+    <ul class="flex flex-row items-center space-x-2 sm:space-x-4 md:space-x-6 py-2">
+    <li class="text-gray-600 hover:text-gray-900 text-base sm:text-lg">
+      <a
+        class="px-2 py-1 sm:px-3 sm:py-2 rounded hover:bg-gray-100 transition-colors" href="/">Home</a>
+    </li>
+    <li class="text-gray-600 hover:text-gray-900 text-base sm:text-lg">
+      <a
+        class="px-2 py-1 sm:px-3 sm:py-2 rounded hover:bg-gray-100 transition-colors" aria-current="true" class="ancestor font-semibold" href="/posts/">Posts</a>
+    </li>
+    <li class="text-gray-600 hover:text-gray-900 text-base sm:text-lg">
+      <a
+        class="px-2 py-1 sm:px-3 sm:py-2 rounded hover:bg-gray-100 transition-colors" href="/tags/">Tags</a>
+    </li>
+    <li class="text-gray-600 hover:text-gray-900 text-base sm:text-lg">
+      <a
+        class="px-2 py-1 sm:px-3 sm:py-2 rounded hover:bg-gray-100 transition-colors">About</a>
+    </li>
+    </ul>
+  </nav>
+
+</div>
+    </div>
+  </header>
+  
+  <div class="flex-1 flex flex-col min-h-screen pt-24">
+    <main class="flex-1 w-full max-w-4xl mx-auto px-6 overflow-x-auto sm:overflow-visible">
+      
+  <article class="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+    <header class="p-8 border-b border-gray-100 relative overflow-hidden">
+      
+      <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-blue-50 to-transparent rounded-full opacity-70 -z-0 blur-2xl transform translate-x-1/4 -translate-y-1/4"></div>
+      
+      
+      
+      
+      <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 relative">DSSSsimulate</h1>
+      
+      <div class="flex flex-wrap items-center text-sm text-gray-500 gap-4 relative">
+        
+        
+        
+        <time datetime="2025-06-02T13:17:54&#43;08:00" class="flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          2025-06-02
+        </time>
+        
+        
+        <span class="flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          20 min read
+        </span>
+
+        
+        <span id="busuanzi_container_page_pv" class="inline-flex items-center whitespace-nowrap">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5 text-gray-400 inline-block flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+          </svg><span class="whitespace-nowrap">Page Views <span id="busuanzi_value_page_pv"></span></span>
+        </span>
+      </div>
+    </header>
+
+    <div class="p-8 prose prose-sm sm:prose lg:prose-lg max-w-none">
+      <h1 id="基于python实现的直接序列扩频仿真系统">基于Python实现的直接序列扩频仿真系统</h1>
+<h2 id="一背景">一、背景</h2>
+<p>直接序列扩频通信系统(Direct-Sequence Spread Spectrum, DSSS)是目前应用最为广泛的系统。
+在发送端，DSSS将发送序列利用伪随机序列扩展到一个很宽的频带上去，
+在接收端又用相同的扩频序列进行解扩，恢复出原有信息。由于干扰信息
+与伪随机序列不相关，扩频后能够使窄带干扰得到有效抑制，提高输出信噪比。<br>
+<img src="./pics/DSSS_system.png" alt="DSSS_system"></p>
+<h2 id="二系统目标">二、系统目标</h2>
+<p>本次仿真的DSSS系统目标是利用python实现100Hz扩频序列，100/7Hz的二进制比特信息
+100Hz的7位双极性m序列，2000Hz的载波信号cos4000$\pi$t，BPSK调制以及高斯白噪声
+在接收端实现2000Hz的恢复载波，以及凯塞窗低通滤波器，对滤波后的信号进行抽样判决。</p>
+<h2 id="三python实现">三、Python实现</h2>
+<h3 id="发射端">发射端</h3>
+<h4 id="m序列码产生">M序列码产生</h4>
+<p>7位M序列码可以直接通过3个比特位的寄存器实现。具体实现可以查看别的博客。
+7位M序列码可以通过对第一个比特位和最后一个比特位的模二相加实现。
+笔者算得的一个7位M序列码为1101001，具体代码实现如下:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mSequence</span>(num: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>, pose: list[int] <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>]) <span style="color:#f92672">-&gt;</span> list[list]:
+</span></span><span style="display:flex;"><span>    mSeqGen: list[int] <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(num)]
+</span></span><span style="display:flex;"><span>    mSeq: list[int] <span style="color:#f92672">=</span> list(range(<span style="color:#ae81ff">2</span><span style="color:#f92672">**</span>num<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2</span><span style="color:#f92672">**</span>num<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>        mSeqGen_ <span style="color:#f92672">=</span> mSeqGen<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(num<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>            mSeqGen[j<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> mSeqGen_[j]
+</span></span><span style="display:flex;"><span>        mSeqGen[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> sum(
+</span></span><span style="display:flex;"><span>            [mSeqGen_[k]<span style="color:#66d9ef">if</span> k<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">in</span> pose <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> range(num)]) <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>        mSeq[i] <span style="color:#f92672">=</span> mSeqGen[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>    mSeqContinuos: list[Union[int, float]] <span style="color:#f92672">=</span> continuousFormat(
+</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> mSeq], <span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>    mSeqContinuos_: list[int] <span style="color:#f92672">=</span> [int(i) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> mSeqContinuos]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> [mSeq, mSeqContinuos_]
+</span></span></code></pre></div><p>参数解释，输入参数num是m序列的阶数，因为要输出7位m序列，所以阶数默认是3。
+pose参数是反馈的参数。因为3阶m序列信号的产生是第1位和第3为反馈，所以是1,3。</p>
+<h4 id="连续采样">连续采样</h4>
+<p>信号是连续的，但是计算机存储信息是离散的，所以笔者实现了一个对信号进行高频率离散采样的python函数。
+因为调制频率是2000Hz，根据奈奎斯特采样定律，要想无失真从采样信号中恢复出来原始信号，采样频率至少需要4000Hz。
+所以笔者采用5000Hz的采样频率的采样信号表达连续信号。
+具体的python程序实现如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">continuousFormat</span>(data: Union[list[Union[float, int]], list[float], list[int]], freq: Union[float, int], samplingFreq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">5000</span>) <span style="color:#f92672">-&gt;</span> list[Union[float, int]]:
+</span></span><span style="display:flex;"><span>    listLen: int <span style="color:#f92672">=</span> math<span style="color:#f92672">.</span>ceil(len(data)<span style="color:#f92672">*</span>samplingFreq<span style="color:#f92672">/</span>freq)
+</span></span><span style="display:flex;"><span>    continuousOut: list[float] <span style="color:#f92672">=</span> list(range(listLen))
+</span></span><span style="display:flex;"><span>    pointer: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(listLen):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> i<span style="color:#f92672">/</span>samplingFreq <span style="color:#f92672">&gt;</span> pointer<span style="color:#f92672">/</span>freq:
+</span></span><span style="display:flex;"><span>            pointer <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            continuousOut[i] <span style="color:#f92672">=</span> data[pointer<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            continuousOut[i] <span style="color:#f92672">=</span> data[pointer<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> continuousOut
+</span></span></code></pre></div><p>这里data是输入的信号，freq是输入信号的频率。samlingFreq是采样的频率，默认是5000Hz。
+输出是经过5000Hz采样后的信号。</p>
+<h4 id="输入信号产生">输入信号产生</h4>
+<p>本节就通过python的随机数模块产生100个二进制信号，然后将0映射为1,将1映射为-1产生100/7Hz的NRZ信号。
+具体python实现如下:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generateData</span>(length: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>, freq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span><span style="color:#f92672">/</span><span style="color:#ae81ff">7</span>, samFreq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">5000</span>) <span style="color:#f92672">-&gt;</span> list[list]:
+</span></span><span style="display:flex;"><span>    data: list[int] <span style="color:#f92672">=</span> [random<span style="color:#f92672">.</span>randrange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>) <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(length)]
+</span></span><span style="display:flex;"><span>    dataSignal: list[int] <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> data]
+</span></span><span style="display:flex;"><span>    data_: list[Union[float, int]] <span style="color:#f92672">=</span> continuousFormat(
+</span></span><span style="display:flex;"><span>        dataSignal, freq, samFreq)
+</span></span><span style="display:flex;"><span>    dataOut: list[int] <span style="color:#f92672">=</span> [int(i)<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> data_]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> [data, dataOut]
+</span></span></code></pre></div><p>输入参数length是要产生的数据长度，freq是产生输入信号的频率。samFreq是将信号连续采样的频率。
+输出的data是原始的二进制信号，dataOut是输出的5000Hz采样的NRZ信号。</p>
+<h4 id="dsss扩频">DSSS扩频</h4>
+<p>DSSS扩频就直接通过对M序列码和NRZ输入信号相乘即可得出DSSS调制信号。这里直接给出python实现。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generateDSSSData</span>(data: list[int], mSeq: list[int], samDataFreq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span><span style="color:#f92672">/</span><span style="color:#ae81ff">7</span>, samMSeqFreq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>, samFreq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">5000</span>) <span style="color:#f92672">-&gt;</span> list[int]:
+</span></span><span style="display:flex;"><span>    mSeqLastTime: float <span style="color:#f92672">=</span> len(mSeq)<span style="color:#f92672">/</span>samFreq
+</span></span><span style="display:flex;"><span>    dataLastTime: float <span style="color:#f92672">=</span> len(data)<span style="color:#f92672">/</span>samFreq
+</span></span><span style="display:flex;"><span>    mSeqSamping: list[int] <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    dataSam: list[int] <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    samTime: float <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.5</span><span style="color:#f92672">/</span>samMSeqFreq
+</span></span><span style="display:flex;"><span>    dataDSSS: list[int] <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> samTime <span style="color:#f92672">&lt;</span> mSeqLastTime:
+</span></span><span style="display:flex;"><span>        y: float <span style="color:#f92672">=</span> dataSampling(mSeq, samTime)
+</span></span><span style="display:flex;"><span>        mSeqSamping<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">1</span>)<span style="color:#66d9ef">if</span> y <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> mSeqSamping<span style="color:#f92672">.</span>append(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        samTime <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>samMSeqFreq
+</span></span><span style="display:flex;"><span>    samTime <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.5</span><span style="color:#f92672">/</span>samDataFreq
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> samTime <span style="color:#f92672">&lt;</span> dataLastTime:
+</span></span><span style="display:flex;"><span>        y: float <span style="color:#f92672">=</span> dataSampling(data, samTime)
+</span></span><span style="display:flex;"><span>        dataSam<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">if</span> y <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> dataSam<span style="color:#f92672">.</span>append(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        samTime <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>samDataFreq
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> dataSam:
+</span></span><span style="display:flex;"><span>        [dataDSSS<span style="color:#f92672">.</span>append(i<span style="color:#f92672">*</span>j)<span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> mSeqSamping]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> [int(i) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> continuousFormat(dataDSSS, samMSeqFreq)]
+</span></span></code></pre></div><p>当然，笔者想了个笨方法。对输入NRZ信号进行了抽样判决，再作乘法。<br>
+抽样判决函数如下:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dataSampling</span>(data: list, samplingTime: Union[float, int], samFreq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">5000</span>) <span style="color:#f92672">-&gt;</span> float:
+</span></span><span style="display:flex;"><span>    dataLastTime: float <span style="color:#f92672">=</span> len(data)<span style="color:#f92672">/</span>samFreq
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> samplingTime <span style="color:#f92672">&gt;</span> dataLastTime:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#34;采样时间大于信号持续时间。&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">elif</span> samplingTime <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#34;采样时间不得为负数。&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        x: NDArray <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, dataLastTime, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>samFreq)
+</span></span><span style="display:flex;"><span>        pointer: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        flag: bool <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(data)):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> samplingTime <span style="color:#f92672">&lt;</span> x[i]:
+</span></span><span style="display:flex;"><span>                pointer <span style="color:#f92672">=</span> i
+</span></span><span style="display:flex;"><span>                flag <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> flag:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#39;取样失败，请检查取样时间&#39;</span>)
+</span></span><span style="display:flex;"><span>        y: float <span style="color:#f92672">=</span> data[pointer]<span style="color:#f92672">-</span>(x[pointer]<span style="color:#f92672">-</span>samplingTime) <span style="color:#f92672">*</span> \
+</span></span><span style="display:flex;"><span>            (data[pointer]<span style="color:#f92672">-</span>data[pointer<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])<span style="color:#f92672">*</span>samFreq
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> y
+</span></span></code></pre></div><p>因为抽样是离散的，不一定会刚好抽样到数据，所以笔者采取的策略是局部线性插值决定采样值。<br>
+实际采样公式如下:
+$$y=x_i-(x_i-t)\times (x_i-x_{i-1})\times f$$
+其中y是采样值，$x_i$是第i个采样点的数值，t是采样时间，f是采样频率。</p>
+<h4 id="bpsk调制">BPSK调制</h4>
+<p>BPSK调制只需要将信号直接和$\cos 4000\pi t$相乘即可。这里直接给出python实现:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">bpskModulator</span>(data: list[int], freqMod: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">2000</span>, samFreq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">5000</span>) <span style="color:#f92672">-&gt;</span> list[float]:
+</span></span><span style="display:flex;"><span>    time: NDArray[np<span style="color:#f92672">.</span>float128] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linspace(
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">0</span>, len(data)<span style="color:#f92672">/</span>samFreq, num<span style="color:#f92672">=</span>len(data))
+</span></span><span style="display:flex;"><span>    carrier: NDArray <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>cos(<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>freqMod<span style="color:#f92672">*</span>np<span style="color:#f92672">.</span>pi<span style="color:#f92672">*</span>time)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> [i <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> carrier<span style="color:#f92672">*</span>data]
+</span></span></code></pre></div><h3 id="信道">信道</h3>
+<h4 id="加性高斯白噪声">加性高斯白噪声</h4>
+<p>笔者这里直接通过生成一个取值-1到1的长度和输入信号一样的随机数数列，通过乘上一个系数实现加性高斯白噪声信道。<br>
+当然首先需要得到信号x和噪声r的功率。公式如下:
+$$P=\frac{1}{n} \sum^{n-1}_{i=0}{|x_i|}^2$$
+python实现如下:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">countAverPower</span>(signal: list[float]) <span style="color:#f92672">-&gt;</span> float:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> sum([i<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> signal])<span style="color:#f92672">/</span>len(signal)
+</span></span></code></pre></div><p>计算出信号和生成的随机数的功率，可以通过以下的公式得出相应SNR的噪声的系数:
+$$k=\sqrt{\frac{P_S}{P_R\times e^{\frac{SNR}{10}}}}$$
+其中$P_S$是信号的功率$P_R$是生成的随机数序列的功率，SNR是给定的信道信噪比。<br>
+加性高斯白噪声的python实现如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">awgn</span>(signal: list[float], SNR: Union[int, float] <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>) <span style="color:#f92672">-&gt;</span> list[float]:
+</span></span><span style="display:flex;"><span>    signalAverPower: float <span style="color:#f92672">=</span> countAverPower(signal)
+</span></span><span style="display:flex;"><span>    y: list[float] <span style="color:#f92672">=</span> [random<span style="color:#f92672">.</span>uniform(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)<span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(len(signal))]
+</span></span><span style="display:flex;"><span>    yPower: float <span style="color:#f92672">=</span> countAverPower(y)
+</span></span><span style="display:flex;"><span>    y_: list[float] <span style="color:#f92672">=</span> y<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>    k: float <span style="color:#f92672">=</span> signalAverPower<span style="color:#f92672">/</span>(yPower<span style="color:#f92672">*</span>(<span style="color:#ae81ff">10</span><span style="color:#f92672">**</span>(SNR<span style="color:#f92672">/</span><span style="color:#ae81ff">10</span>)))
+</span></span><span style="display:flex;"><span>    k <span style="color:#f92672">=</span> math<span style="color:#f92672">.</span>sqrt(k)
+</span></span><span style="display:flex;"><span>    y <span style="color:#f92672">=</span> [i<span style="color:#f92672">*</span>k <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> y_]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> [y[i]<span style="color:#f92672">+</span>signal[i]<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(signal))]
+</span></span></code></pre></div><h3 id="接收端">接收端</h3>
+<h4 id="bpsk解调器">BPSK解调器</h4>
+<p>这里直接将输入信号和$\cos 4000\pi t$相乘即可得到解调信号，当然还需要将信号送入低通滤波器。<br>
+以下是bpsk解调器的python实现，对于凯塞窗低通数字滤波器的实现可以通过阅读数字信号处理相关书籍了解。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">I0</span>(x: Union[float, int], num: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>) <span style="color:#f92672">-&gt;</span> float:
+</span></span><span style="display:flex;"><span>    y: float <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(num):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            y <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            y <span style="color:#f92672">+=</span> ((<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>math<span style="color:#f92672">.</span>factorial(i))<span style="color:#f92672">*</span>((x<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">**</span>i))<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> y
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">lowPF</span>(beta: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">4.538</span>, N: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">30</span>) <span style="color:#f92672">-&gt;</span> list[float]:
+</span></span><span style="display:flex;"><span>    a: float <span style="color:#f92672">=</span> (N<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    hn: list[float] <span style="color:#f92672">=</span> [math<span style="color:#f92672">.</span>sin(<span style="color:#ae81ff">0.3</span><span style="color:#f92672">*</span>np<span style="color:#f92672">.</span>pi<span style="color:#f92672">*</span>(i<span style="color:#f92672">-</span>a))<span style="color:#f92672">/</span>(np<span style="color:#f92672">.</span>pi<span style="color:#f92672">*</span>(i<span style="color:#f92672">-</span>a))
+</span></span><span style="display:flex;"><span>                       <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(N)]
+</span></span><span style="display:flex;"><span>    wn: list[float] <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span> <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(N)]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(N):
+</span></span><span style="display:flex;"><span>        x0: float <span style="color:#f92672">=</span> beta<span style="color:#f92672">*</span>math<span style="color:#f92672">.</span>sqrt(<span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>(<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>i<span style="color:#f92672">/</span>(N<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)))<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>        wn[i] <span style="color:#f92672">=</span> I0(x0)<span style="color:#f92672">/</span>I0(beta)
+</span></span><span style="display:flex;"><span>    hn: list[float] <span style="color:#f92672">=</span> [hn[i]<span style="color:#f92672">*</span>wn[i]<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(N)]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> hn
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">bpskDemodulate</span>(signal: list[float], freqDemod: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">2000</span>, samFreq: Union[int, float] <span style="color:#f92672">=</span> <span style="color:#ae81ff">5000</span>) <span style="color:#f92672">-&gt;</span> list[float]:
+</span></span><span style="display:flex;"><span>    time: NDArray[np<span style="color:#f92672">.</span>float128] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linspace(
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">0</span>, len(signal)<span style="color:#f92672">/</span>samFreq, num<span style="color:#f92672">=</span>len(signal))
+</span></span><span style="display:flex;"><span>    carrier: NDArray <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>cos(<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>freqDemod<span style="color:#f92672">*</span>np<span style="color:#f92672">.</span>pi<span style="color:#f92672">*</span>time)
+</span></span><span style="display:flex;"><span>    y: list[float] <span style="color:#f92672">=</span> [signal[i]<span style="color:#f92672">*</span>carrier[i]<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(signal))]
+</span></span><span style="display:flex;"><span>    hn: list[float] <span style="color:#f92672">=</span> lowPF()
+</span></span><span style="display:flex;"><span>    demodulateSignal <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>convolve(hn, y)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> [i <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> demodulateSignal]
+</span></span></code></pre></div><h4 id="dsss解调">DSSS解调</h4>
+<p>DSSS解调仅需将输入信号和7位m序列信号相乘即可得到DSSS解调信号。 <br>
+python实现如下:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">demodDSSS</span>(signal: list[float], mSeqSignal: list[int]) <span style="color:#f92672">-&gt;</span> list[float]:
+</span></span><span style="display:flex;"><span>    mSeqSig: list[int] <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> len(signal) <span style="color:#f92672">&gt;</span> len(mSeqSig):
+</span></span><span style="display:flex;"><span>        mSeqSig<span style="color:#f92672">.</span>extend(mSeqSignal)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> [mSeqSig[i]<span style="color:#f92672">*</span>signal[i] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(signal))]
+</span></span></code></pre></div><h4 id="抽样判决">抽样判决</h4>
+<p>先前已经实现了抽样判决的函数了，这里直接使用即可。
+python代码如下:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">samData</span>(signal: list[float], freq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span><span style="color:#f92672">/</span><span style="color:#ae81ff">7</span>, samFreq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">5000</span>) <span style="color:#f92672">-&gt;</span> list[int]:
+</span></span><span style="display:flex;"><span>    samTime: float <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.5</span><span style="color:#f92672">/</span>freq
+</span></span><span style="display:flex;"><span>    signalLastTime: float <span style="color:#f92672">=</span> len(signal)<span style="color:#f92672">/</span>samFreq
+</span></span><span style="display:flex;"><span>    data: list[int] <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> samTime <span style="color:#f92672">&lt;</span> signalLastTime:
+</span></span><span style="display:flex;"><span>        y: float <span style="color:#f92672">=</span> dataSampling(signal, samTime)
+</span></span><span style="display:flex;"><span>        data<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">0</span> <span style="color:#66d9ef">if</span> y <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        samTime <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>freq
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> data
+</span></span></code></pre></div><h2 id="四完整代码">四、完整代码</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> math
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> Union
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> numpy.typing <span style="color:#f92672">import</span> NDArray
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> random
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">samData</span>(signal: list[float], freq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span><span style="color:#f92672">/</span><span style="color:#ae81ff">7</span>, samFreq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">5000</span>) <span style="color:#f92672">-&gt;</span> list[int]:
+</span></span><span style="display:flex;"><span>    samTime: float <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.5</span><span style="color:#f92672">/</span>freq
+</span></span><span style="display:flex;"><span>    signalLastTime: float <span style="color:#f92672">=</span> len(signal)<span style="color:#f92672">/</span>samFreq
+</span></span><span style="display:flex;"><span>    data: list[int] <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> samTime <span style="color:#f92672">&lt;</span> signalLastTime:
+</span></span><span style="display:flex;"><span>        y: float <span style="color:#f92672">=</span> dataSampling(signal, samTime)
+</span></span><span style="display:flex;"><span>        data<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">0</span> <span style="color:#66d9ef">if</span> y <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        samTime <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>freq
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">demodDSSS</span>(signal: list[float], mSeqSignal: list[int]) <span style="color:#f92672">-&gt;</span> list[float]:
+</span></span><span style="display:flex;"><span>    mSeqSig: list[int] <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> len(signal) <span style="color:#f92672">&gt;</span> len(mSeqSig):
+</span></span><span style="display:flex;"><span>        mSeqSig<span style="color:#f92672">.</span>extend(mSeqSignal)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> [mSeqSig[i]<span style="color:#f92672">*</span>signal[i] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(signal))]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">I0</span>(x: Union[float, int], num: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>) <span style="color:#f92672">-&gt;</span> float:
+</span></span><span style="display:flex;"><span>    y: float <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(num):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            y <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            y <span style="color:#f92672">+=</span> ((<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>math<span style="color:#f92672">.</span>factorial(i))<span style="color:#f92672">*</span>((x<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">**</span>i))<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> y
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">lowPF</span>(beta: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">4.538</span>, N: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">30</span>) <span style="color:#f92672">-&gt;</span> list[float]:
+</span></span><span style="display:flex;"><span>    a: float <span style="color:#f92672">=</span> (N<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    hn: list[float] <span style="color:#f92672">=</span> [math<span style="color:#f92672">.</span>sin(<span style="color:#ae81ff">0.3</span><span style="color:#f92672">*</span>np<span style="color:#f92672">.</span>pi<span style="color:#f92672">*</span>(i<span style="color:#f92672">-</span>a))<span style="color:#f92672">/</span>(np<span style="color:#f92672">.</span>pi<span style="color:#f92672">*</span>(i<span style="color:#f92672">-</span>a))
+</span></span><span style="display:flex;"><span>                       <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(N)]
+</span></span><span style="display:flex;"><span>    wn: list[float] <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span> <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(N)]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(N):
+</span></span><span style="display:flex;"><span>        x0: float <span style="color:#f92672">=</span> beta<span style="color:#f92672">*</span>math<span style="color:#f92672">.</span>sqrt(<span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>(<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>i<span style="color:#f92672">/</span>(N<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)))<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>        wn[i] <span style="color:#f92672">=</span> I0(x0)<span style="color:#f92672">/</span>I0(beta)
+</span></span><span style="display:flex;"><span>    hn: list[float] <span style="color:#f92672">=</span> [hn[i]<span style="color:#f92672">*</span>wn[i]<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(N)]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> hn
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">bpskDemodulate</span>(signal: list[float], freqDemod: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">2000</span>, samFreq: Union[int, float] <span style="color:#f92672">=</span> <span style="color:#ae81ff">5000</span>) <span style="color:#f92672">-&gt;</span> list[float]:
+</span></span><span style="display:flex;"><span>    time: NDArray[np<span style="color:#f92672">.</span>float128] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linspace(
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">0</span>, len(signal)<span style="color:#f92672">/</span>samFreq, num<span style="color:#f92672">=</span>len(signal))
+</span></span><span style="display:flex;"><span>    carrier: NDArray <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>cos(<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>freqDemod<span style="color:#f92672">*</span>np<span style="color:#f92672">.</span>pi<span style="color:#f92672">*</span>time)
+</span></span><span style="display:flex;"><span>    y: list[float] <span style="color:#f92672">=</span> [signal[i]<span style="color:#f92672">*</span>carrier[i]<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(signal))]
+</span></span><span style="display:flex;"><span>    hn: list[float] <span style="color:#f92672">=</span> lowPF()
+</span></span><span style="display:flex;"><span>    demodulateSignal <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>convolve(hn, y)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> [i <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> demodulateSignal]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">countAverPower</span>(signal: list[float]) <span style="color:#f92672">-&gt;</span> float:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> sum([i<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> signal])<span style="color:#f92672">/</span>len(signal)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">awgn</span>(signal: list[float], SNR: Union[int, float] <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>) <span style="color:#f92672">-&gt;</span> list[float]:
+</span></span><span style="display:flex;"><span>    signalAverPower: float <span style="color:#f92672">=</span> countAverPower(signal)
+</span></span><span style="display:flex;"><span>    y: list[float] <span style="color:#f92672">=</span> [random<span style="color:#f92672">.</span>uniform(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)<span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(len(signal))]
+</span></span><span style="display:flex;"><span>    yPower: float <span style="color:#f92672">=</span> countAverPower(y)
+</span></span><span style="display:flex;"><span>    y_: list[float] <span style="color:#f92672">=</span> y<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>    k: float <span style="color:#f92672">=</span> signalAverPower<span style="color:#f92672">/</span>(yPower<span style="color:#f92672">*</span>(<span style="color:#ae81ff">10</span><span style="color:#f92672">**</span>(SNR<span style="color:#f92672">/</span><span style="color:#ae81ff">10</span>)))
+</span></span><span style="display:flex;"><span>    k <span style="color:#f92672">=</span> math<span style="color:#f92672">.</span>sqrt(k)
+</span></span><span style="display:flex;"><span>    y <span style="color:#f92672">=</span> [i<span style="color:#f92672">*</span>k <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> y_]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> [y[i]<span style="color:#f92672">+</span>signal[i]<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(signal))]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">bpskModulator</span>(data: list[int], freqMod: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">2000</span>, samFreq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">5000</span>) <span style="color:#f92672">-&gt;</span> list[float]:
+</span></span><span style="display:flex;"><span>    time: NDArray[np<span style="color:#f92672">.</span>float128] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linspace(
+</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">0</span>, len(data)<span style="color:#f92672">/</span>samFreq, num<span style="color:#f92672">=</span>len(data))
+</span></span><span style="display:flex;"><span>    carrier: NDArray <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>cos(<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>freqMod<span style="color:#f92672">*</span>np<span style="color:#f92672">.</span>pi<span style="color:#f92672">*</span>time)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> [i <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> carrier<span style="color:#f92672">*</span>data]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dataSampling</span>(data: list, samplingTime: Union[float, int], samFreq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">5000</span>) <span style="color:#f92672">-&gt;</span> float:
+</span></span><span style="display:flex;"><span>    dataLastTime: float <span style="color:#f92672">=</span> len(data)<span style="color:#f92672">/</span>samFreq
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> samplingTime <span style="color:#f92672">&gt;</span> dataLastTime:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#34;采样时间大于信号持续时间。&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">elif</span> samplingTime <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#34;采样时间不得为负数。&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        x: NDArray <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, dataLastTime, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>samFreq)
+</span></span><span style="display:flex;"><span>        pointer: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        flag: bool <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(data)):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> samplingTime <span style="color:#f92672">&lt;</span> x[i]:
+</span></span><span style="display:flex;"><span>                pointer <span style="color:#f92672">=</span> i
+</span></span><span style="display:flex;"><span>                flag <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> flag:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#39;取样失败，请检查取样时间&#39;</span>)
+</span></span><span style="display:flex;"><span>        y: float <span style="color:#f92672">=</span> data[pointer]<span style="color:#f92672">-</span>(x[pointer]<span style="color:#f92672">-</span>samplingTime) <span style="color:#f92672">*</span> \
+</span></span><span style="display:flex;"><span>            (data[pointer]<span style="color:#f92672">-</span>data[pointer<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])<span style="color:#f92672">*</span>samFreq
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> y
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generateDSSSData</span>(data: list[int], mSeq: list[int], samDataFreq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span><span style="color:#f92672">/</span><span style="color:#ae81ff">7</span>, samMSeqFreq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>, samFreq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">5000</span>) <span style="color:#f92672">-&gt;</span> list[int]:
+</span></span><span style="display:flex;"><span>    mSeqLastTime: float <span style="color:#f92672">=</span> len(mSeq)<span style="color:#f92672">/</span>samFreq
+</span></span><span style="display:flex;"><span>    dataLastTime: float <span style="color:#f92672">=</span> len(data)<span style="color:#f92672">/</span>samFreq
+</span></span><span style="display:flex;"><span>    mSeqSamping: list[int] <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    dataSam: list[int] <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    samTime: float <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.5</span><span style="color:#f92672">/</span>samMSeqFreq
+</span></span><span style="display:flex;"><span>    dataDSSS: list[int] <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> samTime <span style="color:#f92672">&lt;</span> mSeqLastTime:
+</span></span><span style="display:flex;"><span>        y: float <span style="color:#f92672">=</span> dataSampling(mSeq, samTime)
+</span></span><span style="display:flex;"><span>        mSeqSamping<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">1</span>)<span style="color:#66d9ef">if</span> y <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> mSeqSamping<span style="color:#f92672">.</span>append(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        samTime <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>samMSeqFreq
+</span></span><span style="display:flex;"><span>    samTime <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.5</span><span style="color:#f92672">/</span>samDataFreq
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> samTime <span style="color:#f92672">&lt;</span> dataLastTime:
+</span></span><span style="display:flex;"><span>        y: float <span style="color:#f92672">=</span> dataSampling(data, samTime)
+</span></span><span style="display:flex;"><span>        dataSam<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">if</span> y <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> dataSam<span style="color:#f92672">.</span>append(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        samTime <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>samDataFreq
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> dataSam:
+</span></span><span style="display:flex;"><span>        [dataDSSS<span style="color:#f92672">.</span>append(i<span style="color:#f92672">*</span>j)<span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> mSeqSamping]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> [int(i) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> continuousFormat(dataDSSS, samMSeqFreq)]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generateData</span>(length: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>, freq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span><span style="color:#f92672">/</span><span style="color:#ae81ff">7</span>, samFreq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">5000</span>) <span style="color:#f92672">-&gt;</span> list[list]:
+</span></span><span style="display:flex;"><span>    data: list[int] <span style="color:#f92672">=</span> [random<span style="color:#f92672">.</span>randrange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>) <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(length)]
+</span></span><span style="display:flex;"><span>    dataSignal: list[int] <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> data]
+</span></span><span style="display:flex;"><span>    data_: list[Union[float, int]] <span style="color:#f92672">=</span> continuousFormat(
+</span></span><span style="display:flex;"><span>        dataSignal, freq, samFreq)
+</span></span><span style="display:flex;"><span>    dataOut: list[int] <span style="color:#f92672">=</span> [int(i)<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> data_]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> [data, dataOut]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">continuousFormat</span>(data: Union[list[Union[float, int]], list[float], list[int]], freq: Union[float, int], samplingFreq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">5000</span>) <span style="color:#f92672">-&gt;</span> list[Union[float, int]]:
+</span></span><span style="display:flex;"><span>    listLen: int <span style="color:#f92672">=</span> math<span style="color:#f92672">.</span>ceil(len(data)<span style="color:#f92672">*</span>samplingFreq<span style="color:#f92672">/</span>freq)
+</span></span><span style="display:flex;"><span>    continuousOut: list[float] <span style="color:#f92672">=</span> list(range(listLen))
+</span></span><span style="display:flex;"><span>    pointer: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(listLen):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> i<span style="color:#f92672">/</span>samplingFreq <span style="color:#f92672">&gt;</span> pointer<span style="color:#f92672">/</span>freq:
+</span></span><span style="display:flex;"><span>            pointer <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            continuousOut[i] <span style="color:#f92672">=</span> data[pointer<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            continuousOut[i] <span style="color:#f92672">=</span> data[pointer<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> continuousOut
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">drawSpectrum</span>(input: list, title: str, samFreq: Union[float, int] <span style="color:#f92672">=</span> <span style="color:#ae81ff">5000</span>) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>    y: NDArray[np<span style="color:#f92672">.</span>complex128] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>fft<span style="color:#f92672">.</span>fftshift(np<span style="color:#f92672">.</span>fft<span style="color:#f92672">.</span>fft(input))
+</span></span><span style="display:flex;"><span>    yAbs: NDArray[np<span style="color:#f92672">.</span>float128] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>abs(y)
+</span></span><span style="display:flex;"><span>    yPha: NDArray[np<span style="color:#f92672">.</span>float128] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>angle(y)
+</span></span><span style="display:flex;"><span>    x: NDArray <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>fft<span style="color:#f92672">.</span>fftshift(np<span style="color:#f92672">.</span>fft<span style="color:#f92672">.</span>fftfreq(len(y)))
+</span></span><span style="display:flex;"><span>    x: NDArray <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linspace(<span style="color:#f92672">-</span>samFreq<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>, samFreq<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>, num<span style="color:#f92672">=</span>len(y))
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">9</span>))
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>suptitle(title)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>plot(x, yAbs)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;幅度谱&#39;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;频率&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;幅度&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>plot(x, yPha)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;相位谱&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;频率&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;相位&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span>title<span style="color:#e6db74">}</span><span style="color:#e6db74">.png&#39;</span>)<span style="color:#66d9ef">if</span> title <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>show()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">drawData</span>(input: list, title: Union[str, <span style="color:#66d9ef">None</span>] <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>, freq: Union[int, float] <span style="color:#f92672">=</span> <span style="color:#ae81ff">5000</span>) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>    x: NDArray[np<span style="color:#f92672">.</span>float128] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, len(input)<span style="color:#f92672">/</span>freq, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>freq)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">9</span>))
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>plot(x, input)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>title(title) <span style="color:#66d9ef">if</span> title <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;时间/s&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;幅度&#39;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span>title<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)<span style="color:#66d9ef">if</span> title <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>show()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mSequence</span>(num: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>, pose: list[int] <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>]) <span style="color:#f92672">-&gt;</span> list[list]:
+</span></span><span style="display:flex;"><span>    mSeqGen: list[int] <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(num)]
+</span></span><span style="display:flex;"><span>    mSeq: list[int] <span style="color:#f92672">=</span> list(range(<span style="color:#ae81ff">2</span><span style="color:#f92672">**</span>num<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2</span><span style="color:#f92672">**</span>num<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>        mSeqGen_ <span style="color:#f92672">=</span> mSeqGen<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(num<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>            mSeqGen[j<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> mSeqGen_[j]
+</span></span><span style="display:flex;"><span>        mSeqGen[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> sum(
+</span></span><span style="display:flex;"><span>            [mSeqGen_[k]<span style="color:#66d9ef">if</span> k<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">in</span> pose <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> range(num)]) <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>        mSeq[i] <span style="color:#f92672">=</span> mSeqGen[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>    mSeqContinuos: list[Union[int, float]] <span style="color:#f92672">=</span> continuousFormat(
+</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> mSeq], <span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>    mSeqContinuos_: list[int] <span style="color:#f92672">=</span> [int(i) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> mSeqContinuos]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> [mSeq, mSeqContinuos_]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>() <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>    f <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#39;输出.txt&#39;</span>, <span style="color:#e6db74">&#39;w&#39;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;font.family&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;WenQuanYi Micro Hei&#39;</span>
+</span></span><span style="display:flex;"><span>    mSeq: list[int]
+</span></span><span style="display:flex;"><span>    mSeqSingal: list[int]
+</span></span><span style="display:flex;"><span>    data: list[int]
+</span></span><span style="display:flex;"><span>    dataSignal: list[int]
+</span></span><span style="display:flex;"><span>    snr: int <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>    [mSeq, mSeqSingal] <span style="color:#f92672">=</span> mSequence()
+</span></span><span style="display:flex;"><span>    [data, dataSignal] <span style="color:#f92672">=</span> generateData()
+</span></span><span style="display:flex;"><span>    f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;m序列为:</span><span style="color:#e6db74">{</span>mSeq<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>    f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;数据为:</span><span style="color:#e6db74">{</span>data<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>    f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;信道信噪比为:</span><span style="color:#e6db74">{</span>snr<span style="color:#e6db74">}</span><span style="color:#e6db74">dB</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>    drawSpectrum(mSeqSingal, <span style="color:#e6db74">&#39;双极性7位m序列频谱&#39;</span>)
+</span></span><span style="display:flex;"><span>    drawData(dataSignal, <span style="color:#e6db74">&#39;扩频前待发送二进制信息序列&#39;</span>)
+</span></span><span style="display:flex;"><span>    dataDSSS: list[int] <span style="color:#f92672">=</span> generateDSSSData(dataSignal, mSeqSingal)
+</span></span><span style="display:flex;"><span>    drawData(dataDSSS, <span style="color:#e6db74">&#39;扩频后待发送序列码&#39;</span>)
+</span></span><span style="display:flex;"><span>    bpskSignal: list[float] <span style="color:#f92672">=</span> bpskModulator(dataDSSS)
+</span></span><span style="display:flex;"><span>    bpskSignalNoSpread: list[float] <span style="color:#f92672">=</span> bpskModulator(dataSignal)
+</span></span><span style="display:flex;"><span>    drawData(bpskSignalNoSpread, <span style="color:#e6db74">&#39;扩频前BPSK信号时域波形&#39;</span>)
+</span></span><span style="display:flex;"><span>    drawData(bpskSignal, <span style="color:#e6db74">&#39;扩频后BPSK信号时域波形&#39;</span>)
+</span></span><span style="display:flex;"><span>    drawSpectrum(bpskSignalNoSpread, <span style="color:#e6db74">&#39;扩频前调制信号频谱图&#39;</span>)
+</span></span><span style="display:flex;"><span>    drawSpectrum(bpskSignal, <span style="color:#e6db74">&#39;扩频后调制信号频谱图&#39;</span>)
+</span></span><span style="display:flex;"><span>    yOut: list[float] <span style="color:#f92672">=</span> awgn(bpskSignal, snr)
+</span></span><span style="display:flex;"><span>    drawData(yOut, <span style="color:#e6db74">&#39;信道输出&#39;</span>)
+</span></span><span style="display:flex;"><span>    bpskdemoOutput: list[float] <span style="color:#f92672">=</span> bpskDemodulate(yOut)
+</span></span><span style="display:flex;"><span>    demodDSSSData <span style="color:#f92672">=</span> demodDSSS(bpskdemoOutput, mSeqSingal)
+</span></span><span style="display:flex;"><span>    dataOut: list[int] <span style="color:#f92672">=</span> samData(demodDSSSData)
+</span></span><span style="display:flex;"><span>    ber: float <span style="color:#f92672">=</span> sum([<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> data[i] <span style="color:#f92672">!=</span> dataOut[i]
+</span></span><span style="display:flex;"><span>                      <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(data))])<span style="color:#f92672">/</span>len(data)
+</span></span><span style="display:flex;"><span>    f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;判决出的信号为:</span><span style="color:#e6db74">{</span>dataOut<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>    f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;误码率为:</span><span style="color:#e6db74">{</span>round(ber<span style="color:#f92672">*</span><span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">3</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">%&#34;</span>)
+</span></span><span style="display:flex;"><span>    f<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    main()
+</span></span></code></pre></div><h2 id="reference">Reference</h2>
+<p>[1]刘顺兰，吴杰编著.数字信号处理  第4版[M].西安：西安电子科技大学出版社,2021</p>
+<p>[2]陈树新，于龙强，李勇军.通信原理[M].北京：清华大学出版社,2020</p>
+<p>[3]高伟东，啜钢，刘倩，杜海清编著.移动通信原理  第3版[M].北京：电子工业出版社,2022</p>
+
+    </div>
+
+    
+    <div class="px-8 pb-2 text-sm text-gray-500 flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+      </svg>
+      Last updated on 2025-06-02
+    </div>
+    
+
+    <footer class="px-8 py-6 bg-gray-50 border-t border-gray-100">
+      
+
+      
+      
+      <div class="mt-6 flex justify-center">
+        <a href="/" class="inline-flex items-center text-gray-600 hover:text-blue-600 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back to Home
+        </a>
+      </div>
+    </footer>
+  </article>
+
+  
+  <div class="max-w-4xl mx-auto mt-8 bg-white rounded-lg shadow-md overflow-hidden" style="--tw-prose-body: #374151; --tw-prose-headings: #111827; --tw-prose-links: #2563eb; --tw-prose-links-hover: #1d4ed8; --tw-prose-code-bg: #f3f4f6; color: #374151; background-color: #ffffff;">
+    
+ 
+  </div>
+
+    </main>
+  </div>
+  
+  <footer class="w-full max-w-4xl mx-auto px-6 overflow-x-auto sm:overflow-visible">
+    <div class="py-8 border-t border-gray-200 bg-gray-50 shadow-inner mt-10">
+  <div class="container mx-auto px-4 max-w-4xl">
+    
+     
+     
+       
+         
+       
+    
+
+    
+    <div class="flex justify-center">
+      
+      
+      <div class="transform transition duration-200 hover:scale-110">
+        <a
+          href="https://github.com/awa2333"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-gray-600 hover:text-gray-900"
+          aria-label="GitHub"
+        >
+          <svg
+            class="h-7 w-7"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </a>
+      </div>
+      
+
+      
+      
+
+      
+      
+    </div>
+
+    <div class="text-center mt-6 text-sm text-gray-500">
+      &copy; 2025 Yaoheng&#39;s Blog | Powered by <a href="https://github.com/Daucloud/hugo-theme-void" class="text-gray-600 hover:text-gray-900 hover:underline">hugo-theme-void</a> | <span id="busuanzi_container_site_pv" style="display: none;">Total visits: <span id="busuanzi_value_site_pv" class="text-gray-600"></span></span>
+    </div>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  </div>
+</div>
+
+  </footer>
+</body>
+</html>

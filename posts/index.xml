@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Yaoheng's Blog</title><link>https://awa2333.github.io/posts/</link><description>Recent content in Posts on Yaoheng's Blog</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Mon, 02 Jun 2025 13:17:54 +0800</lastBuildDate><atom:link href="https://awa2333.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Python直接序列扩频仿真</title><link>https://awa2333.github.io/posts/dssssimluate/</link><pubDate>Mon, 02 Jun 2025 13:17:54 +0800</pubDate><guid>https://awa2333.github.io/posts/dssssimluate/</guid><description>&lt;h1 id="基于python实现的直接序列扩频仿真系统">基于Python实现的直接序列扩频仿真系统&lt;/h1>
+&lt;h2 id="一背景">一、背景&lt;/h2>
+&lt;p>直接序列扩频通信系统(Direct-Sequence Spread Spectrum, DSSS)是目前应用最为广泛的系统。
+在发送端，DSSS将发送序列利用伪随机序列扩展到一个很宽的频带上去，
+在接收端又用相同的扩频序列进行解扩，恢复出原有信息。由于干扰信息
+与伪随机序列不相关，扩频后能够使窄带干扰得到有效抑制，提高输出信噪比。&lt;br>
+&lt;img src="./pics/DSSS_system.png" alt="DSSS_system">&lt;/p>
+&lt;h2 id="二系统目标">二、系统目标&lt;/h2>
+&lt;p>本次仿真的DSSS系统目标是利用python实现100Hz扩频序列，100/7Hz的二进制比特信息
+100Hz的7位双极性m序列，2000Hz的载波信号cos4000$\pi$t，BPSK调制以及高斯白噪声
+在接收端实现2000Hz的恢复载波，以及凯塞窗低通滤波器，对滤波后的信号进行抽样判决。&lt;/p>
+&lt;h2 id="三python实现">三、Python实现&lt;/h2>
+&lt;h3 id="发射端">发射端&lt;/h3>
+&lt;h4 id="m序列码产生">M序列码产生&lt;/h4>
+&lt;p>7位M序列码可以直接通过3个比特位的寄存器实现。具体实现可以查看别的博客。
+7位M序列码可以通过对第一个比特位和最后一个比特位的模二相加实现。
+笔者算得的一个7位M序列码为1101001，具体代码实现如下:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">mSequence&lt;/span>(num: int &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">3&lt;/span>, pose: list[int] &lt;span style="color:#f92672">=&lt;/span> [&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">3&lt;/span>]) &lt;span style="color:#f92672">-&amp;gt;&lt;/span> list[list]:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> mSeqGen: list[int] &lt;span style="color:#f92672">=&lt;/span> [&lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> i &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> &lt;span style="color:#66d9ef">for&lt;/span> i &lt;span style="color:#f92672">in&lt;/span> range(num)]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> mSeq: list[int] &lt;span style="color:#f92672">=&lt;/span> list(range(&lt;span style="color:#ae81ff">2&lt;/span>&lt;span style="color:#f92672">**&lt;/span>num&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> i &lt;span style="color:#f92672">in&lt;/span> range(&lt;span style="color:#ae81ff">2&lt;/span>&lt;span style="color:#f92672">**&lt;/span>num&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> mSeqGen_ &lt;span style="color:#f92672">=&lt;/span> mSeqGen&lt;span style="color:#f92672">.&lt;/span>copy()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> j &lt;span style="color:#f92672">in&lt;/span> range(num&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> mSeqGen[j&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> mSeqGen_[j]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> mSeqGen[&lt;span style="color:#ae81ff">0&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> sum(
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [mSeqGen_[k]&lt;span style="color:#66d9ef">if&lt;/span> k&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#f92672">in&lt;/span> pose &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> &lt;span style="color:#66d9ef">for&lt;/span> k &lt;span style="color:#f92672">in&lt;/span> range(num)]) &lt;span style="color:#f92672">%&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> mSeq[i] &lt;span style="color:#f92672">=&lt;/span> mSeqGen[&lt;span style="color:#ae81ff">0&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> mSeqContinuos: list[Union[int, float]] &lt;span style="color:#f92672">=&lt;/span> continuousFormat(
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> i &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#66d9ef">for&lt;/span> i &lt;span style="color:#f92672">in&lt;/span> mSeq], &lt;span style="color:#ae81ff">100&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> mSeqContinuos_: list[int] &lt;span style="color:#f92672">=&lt;/span> [int(i) &lt;span style="color:#66d9ef">for&lt;/span> i &lt;span style="color:#f92672">in&lt;/span> mSeqContinuos]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> [mSeq, mSeqContinuos_]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>参数解释，输入参数num是m序列的阶数，因为要输出7位m序列，所以阶数默认是3。
+pose参数是反馈的参数。因为3阶m序列信号的产生是第1位和第3为反馈，所以是1,3。&lt;br>
+&lt;img src="./pics/%E5%8F%8C%E6%9E%81%E6%80%A77%E4%BD%8Dm%E5%BA%8F%E5%88%97%E9%A2%91%E8%B0%B1.png" alt="m序列码频谱">&lt;/p></description></item><item><title>Nvidia NIM平台本地边缘设备大模型部属</title><link>https://awa2333.github.io/posts/nv-aiagent/</link><pubDate>Sun, 18 Aug 2024 00:00:00 +0800</pubDate><guid>https://awa2333.github.io/posts/nv-aiagent/</guid><description>&lt;h1 id="基于nvidia-nim平台的本地边缘设备大模型部署">基于NVIDIA NIM平台的本地边缘设备大模型部署&lt;/h1>
+&lt;p>摘要：笔者在&lt;a href="https://www.nvidia.cn/training/">NVIDIA DLI&lt;/a>上报名了NVIDIA AI-AGENT夏季训练营，这个课程用三天让我们实现基于&lt;a href="https://build.nvidia.com/explore/discover">NVIDIA NIM&lt;/a>平台的RAG-AIAgent运用。&lt;/p>
+&lt;h2 id="环境部署">环境部署&lt;/h2>
+&lt;p>NVIDIA课程的环境部署在CSDN博客:&lt;a href="https://blog.csdn.net/kunhe0512/article/details/140910139">2024 NVIDIA开发者夏令营环境配置指南(Win&amp;amp;Mac)&lt;/a>中有详细说明。同时，本课程还邀请了Microsoft的工程师作为第二天内容的讲师，对于Microsoft课程内容的环境配置，在GitHub&lt;a href="https://github.com/kinfey/Microsoft-Phi-3-NvidiaNIMWorkshop?tab=readme-ov-file">Microsoft-Phi-3-NvidiaNIMWorkshop&lt;/a>。故笔者不再对个人的环境部署作详细说明。&lt;/p>
+&lt;h2 id="项目概述">项目概述&lt;/h2>
+&lt;p>笔者基于课程所学的内容，采用了&lt;strong>LangChain&lt;/strong>这个python包和&lt;strong>OpenAI&lt;/strong>包提供的AI接口以及&lt;a href="https://build.nvidia.com/explore/discover">NVIDIA&lt;/a>的各式各样的LLM模型实现了一个RAG AIAgent，还进一步实现了图片输入的多模态LLM。&lt;/p>
+&lt;p>&lt;img src="./pics/img1.png" alt="image" title="个人成果">&lt;/p>
+&lt;p>总体来说，这是一个最基本的成果，课程上还有更加惊艳的成果，但是笔者不再赘述。&lt;/p>
+&lt;h2 id="技术方案与实施步骤">技术方案与实施步骤&lt;/h2>
+&lt;p>主要说明笔者个人对于llm和RAG以及他们实现方法的浅薄的理解。&lt;/p>
+&lt;h3 id="模型选择">模型选择&lt;/h3>
+&lt;p>本项目在视觉识别上使用了&lt;a href="https://azure.microsoft.com/zh-cn/products/phi-3/">Microsoft Phi3&lt;/a>模型。在处理用户输入上，笔者采用了&lt;a href="https://github.com/meta-llama/llama3">meta llama3&lt;/a>模型，对于RAG模型，笔者使用了&lt;a href="https://build.nvidia.com/nvidia/embed-qa-4">NVIDIA Embed-QA&lt;/a>模型。当然对于选择什么模型比较符合个人的需求，笔者并不能给出一个具体的答复，毕竟这算是笔者首次接触到LLM，甚至于对于RAG究竟是什么，也是在课上方才了解一二。&lt;/p>
+&lt;h3 id="数据构建">数据构建&lt;/h3>
+&lt;p>对于数据的构建与处理，说实话我依旧难以作出我自己的解答，不过大致应是基于用户输入对文本数据的综合检索，作为增强输入传递到llm再生成数据，也即RAG或者说检索增强生成。具体而言，RAG会把文本数据向量化，同时也把输入向量化，从文本数据的向量中找寻与输入的向量较为&lt;em>&lt;strong>相似&lt;/strong>&lt;/em>的向量。避免了llm在长文本输入中出现的幻觉现象。&lt;/p>
+&lt;h3 id="功能整合">功能整合&lt;/h3>
+&lt;p>课程上第二天和第三天的安排是对于多模态大模型的实现方法作出简要介绍。笔者不才，未能实现多模态的RAG，只能寄希望于未来的某一天可以实现多模态RAG。笔者未能吃透第二天的学习内容，第三天的内容是&lt;em>&lt;strong>简单&lt;/strong>&lt;/em>多模态llm的实现。笔者的简单多模态llm是指额外多了一个图片输入，同时可以让llm直接运行自己生成的代码，而不必自己手动生成。&lt;/p>
+&lt;h2 id="实施步骤">实施步骤&lt;/h2>
+&lt;p>主要说明复现代码的方式。&lt;/p>
+&lt;h3 id="环境搭建">环境搭建&lt;/h3>
+&lt;p>环境搭建方面笔者使用的是Linux平台，Python3.8下所有的包都能直接使用pip安装，并没有踩坑。按照课程的学习，理应还应该补上&lt;em>gradio&lt;/em>包和&lt;em>langchain-community&lt;/em>包，无论Linux平台还是Linux平台，都可以使用&lt;code>pip install gradio&lt;/code>和&lt;code>pip install langchain-community&lt;/code>直接安装。&lt;/p>
+&lt;h3 id="代码实现">代码实现&lt;/h3>
+&lt;p>因为代码较多，笔者只对较为重要的代码作出自己的理解。&lt;/p>
+&lt;h4 id="main">main()&lt;/h4>
+&lt;p>首先是主函数。&lt;code>get_nvidia_key()&lt;/code>从字面上理解就是输入&lt;a href="https://build.nvidia.com/nvidia/embed-qa-4">NVIDIA NIM&lt;/a>平台的密钥，而model和embedder则是选择的模型。当然笔者的Python编程水平较为低下，难以实现面向对象编程。所以代码中的&lt;code>model&lt;/code>和&lt;code>embedder&lt;/code>并不能影响下文的模型，当然待笔者编程能力提升了，应该有办法实现的。而&lt;code>model_initial()&lt;/code>则是对现有的文本向量化，只要模型和文本没有改变，可以不再执行。所以主函数中我把它注释了。对于用户UI，笔者这里使用&lt;em>gradio&lt;/em>包实现。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>():
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> get_nvidia_key()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> model &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;meta/llama-3.1-405b-instruct&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> embedder &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;NV-Embed-QA&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># model_initial(model, embedder)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> gradio_interface &lt;span style="color:#f92672">=&lt;/span> gradio&lt;span style="color:#f92672">.&lt;/span>Interface(fn&lt;span style="color:#f92672">=&lt;/span>model_process,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> inputs&lt;span style="color:#f92672">=&lt;/span>[gradio&lt;span style="color:#f92672">.&lt;/span>Image(label&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;Upload image&amp;#34;&lt;/span>, type&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;filepath&amp;#34;&lt;/span>), &lt;span style="color:#e6db74">&amp;#39;text&amp;#39;&lt;/span>],
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> outputs&lt;span style="color:#f92672">=&lt;/span>[&lt;span style="color:#e6db74">&amp;#39;image&amp;#39;&lt;/span>],
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> title&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;Multi Modal chat agent&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> description&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;Multi Modal chat agent&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> allow_flagging&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;never&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> gradio_interface&lt;span style="color:#f92672">.&lt;/span>launch(debug&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">True&lt;/span>, share&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">False&lt;/span>, show_api&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">False&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">None&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="model_process">model_process()&lt;/h4>
+&lt;p>核心的处理自然是使用llm，这里我们首先是调用&lt;code>microsoft/phi-3-vision-128k-instruct&lt;/code>作为输入图像处理的模型，接着以&lt;code>meta/llama-3.1-405b-instruct&lt;/code>作为综合数据处理的llm。&lt;/p></description></item></channel></rss>
